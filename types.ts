@@ -21,3 +21,5 @@ export enum View {
   NEW = 'new',
   OLD = 'old',
 }
+
+export type ApiStatus = 'pending' | 'online' | 'offline';

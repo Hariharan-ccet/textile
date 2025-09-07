@@ -3,6 +3,7 @@ import Header from './components/Header';
 import ChallanForm from './components/ChallanForm';
 import ChallanPreview from './components/ChallanPreview';
 import OldChallans from './components/OldChallans';
+import ConnectionError from './components/ConnectionError';
 import { type Challan, View } from './types';
 import { useChallans } from './hooks/useChallans';
 
@@ -19,7 +20,7 @@ const getInitialChallan = (): Challan => ({
 
 const App: React.FC = () => {
   const [view, setView] = useState<View>(View.NEW);
-  const { challans, addChallan, deleteChallan, getChallan } = useChallans();
+  const { challans, addChallan, deleteChallan, getChallan, apiStatus, retryFetch } = useChallans();
   const [currentChallan, setCurrentChallan] = useState<Challan>(getInitialChallan());
   const [challanToPrint, setChallanToPrint] = useState<Challan | null>(null);
   
@@ -71,6 +72,42 @@ const App: React.FC = () => {
     }
   };
 
+  const renderContent = () => {
+    if (apiStatus === 'pending') {
+      return (
+        <div className="text-center py-20">
+          <p className="text-lg text-gray-600">Connecting to server...</p>
+        </div>
+      );
+    }
+
+    if (apiStatus === 'offline') {
+      return <ConnectionError onRetry={retryFetch} />;
+    }
+
+    return (
+      view === View.NEW ? (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <ChallanForm
+            ref={formRef}
+            challan={currentChallan}
+            setChallan={setCurrentChallan}
+            onSave={onChallanSaved}
+          />
+          <div>
+              <ChallanPreview challan={currentChallan} />
+          </div>
+        </div>
+      ) : (
+        <OldChallans 
+          challans={challans}
+          onView={viewChallan}
+          onPrint={printChallan}
+          onDelete={deleteChallan}
+        />
+      )
+    );
+  };
 
   return (
     <div className="min-h-screen font-sans text-gray-800">
@@ -79,29 +116,10 @@ const App: React.FC = () => {
         setView={handleSetView} 
         onSave={handleSave} 
         onPrint={handlePrint}
+        apiStatus={apiStatus}
       />
       <main className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto">
-        {view === View.NEW ? (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <ChallanForm
-              ref={formRef}
-              challan={currentChallan}
-              setChallan={setCurrentChallan}
-              onSave={onChallanSaved}
-            />
-            {/* This is the live preview, not used for printing */}
-            <div>
-                <ChallanPreview challan={currentChallan} />
-            </div>
-          </div>
-        ) : (
-          <OldChallans 
-            challans={challans}
-            onView={viewChallan}
-            onPrint={printChallan}
-            onDelete={deleteChallan}
-          />
-        )}
+        {renderContent()}
       </main>
 
       {/* This hidden container is exclusively for printing */}
