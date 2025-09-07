@@ -1,0 +1,5 @@
+{
+  "name": "Copy of Textile Delivery Challan System",
+  "description": "A web application to create, manage, and print textile delivery challans. Users can create new challans, save them, view a history of old challans with search functionality, and print them in a professional format.",
+  "requestFramePermissions": []
+}
