@@ -6,6 +6,7 @@ import OldChallans from './components/OldChallans';
 import ConnectionError from './components/ConnectionError';
 import { type Challan, View } from './types';
 import { useChallans } from './hooks/useChallans';
+import ChallanPrintLayout from './components/ChallanPrintLayout';
 
 const getInitialChallan = (): Challan => ({
   id: `challan_${Date.now()}`,
@@ -126,7 +127,7 @@ const App: React.FC = () => {
       {challanToPrint && (
         <div className="print-only">
             <div id="print-area">
-                <ChallanPreview challan={challanToPrint} />
+                <ChallanPrintLayout challan={challanToPrint} />
             </div>
         </div>
       )}

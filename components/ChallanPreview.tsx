@@ -100,6 +100,7 @@ const ChallanPreview: React.FC<ChallanPreviewProps> = ({ challan }) => {
 
       {/* Footer */}
       <footer className="mt-auto pt-8 text-xs">
+        <p className="mb-4">{challan.notes}</p>
         <div className="flex justify-between items-end font-semibold">
             <p>Checked by</p>
             <p>Packed by</p>
