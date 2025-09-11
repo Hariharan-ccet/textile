@@ -21,7 +21,7 @@ const ChallanPreview: React.FC<ChallanPreviewProps> = ({ challan }) => {
       {/* Top Bar with GSTIN */}
       <div className="flex justify-between items-center text-xs text-gray-600 pb-2">
           <span>GSTIN: 33DMVPR2742Q1Z2</span>
-          <span>GSTIN: 63821 22594</span>
+          <span>Cell No: 63821 22594</span>
       </div>
 
       {/* Header */}
