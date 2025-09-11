@@ -24,7 +24,7 @@ const ChallanCopy: React.FC<{ challan: Challan; type: 'ORIGINAL' | 'DUPLICATE' }
         <p className="text-xs text-gray-700">No. 7/1, Kamarajapuram North, Karur - 639 001.</p>
         <div className="flex justify-between items-center text-xs text-gray-600 pt-2">
           <span>GSTIN: 33DMVPR2742Q1Z2</span>
-          <span>Cell No: 63821 22594</span>
+          <span>Cell No: 9345792383</span>
         </div>
       </header>
       
